@@ -6,7 +6,7 @@ First install all the dependencies
 ```
 pip install -r .\requirements.txt
 ```
-You are good to go! just follow the comments in main.py
+You are good to go! Just follow the comments in main.py
 
 ## IMPORTANT 
 A part of this code was taken from the *Tech with Tim* and *ExceedCodes* channel because I was still learning how to use discord.py API.
@@ -25,5 +25,4 @@ A part of this code was taken from the *Tech with Tim* and *ExceedCodes* channel
   ```
   /dump <username>
   ```
-  
 </details>
