@@ -18,11 +18,16 @@ A part of this code was taken from the *Tech with Tim* and *ExceedCodes* channel
   
   says hi to the user
   ```
-  /hey
+  !hey
   ```
 
   allows the owner of the discord server to remove the role of a user
   ```
-  /dump <username>
+  !dump <username>
+  ```
+
+  lists all the members of the server in the channel; creates list file and sends it to the owner
+  ```
+  !list_all
   ```
 </details>
