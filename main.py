@@ -5,6 +5,8 @@ import logging
 from dotenv import load_dotenv
 import os
 
+from main import GUILD_ID
+
 FILTER = [] # put any words you want to filter in this list
 
 # these are template roles I created for the test server, use your own roles here
@@ -13,6 +15,8 @@ ROLES = {
     "🌾": "Farmer",
     "⚒️": "Builder"
 }
+
+GUILD_ID = 00000000000 # add your server id here
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN') # create a .env file in the same dir and enter the token as "DISCORD_TOKE="
@@ -82,16 +86,39 @@ async def hey(ctx):
 
 @bot.command()
 async def dump(ctx, member_username):
-    owner_id = ctx.guild.owner_id
-    if owner_id == ctx.author.id:
+    author_id = ctx.author.id
+    if check_owner(author_id):
         member = ctx.guild.get_member_named(member_username)
         if member is not None:
-            role = member.roles[1]
-            await member.remove_roles(role)
+            try: 
+                role = member.roles[1]
+                await member.remove_roles(role)
+            except IndexError:
+                await ctx.send(f"{member_username} has no roles")
         else:
-            print(f"Error: cannot find user by the name: {member_username}")
+            await ctx.send(f"Cannot find user by the name: {member_username}")
     else:
-        print(f"Error: a member({ctx.author.name}) tried to use the dump command. Ignoring.")
+        await ctx.send(f"{ctx.author.mention}, you are not the owner. Ignoring dump request")
+
+@bot.command()
+async def list_all(ctx):
+    if check_owner(ctx.author.id):
+        guild = discord.utils.get(bot.guilds, id=GUILD_ID)
+        members_list = "members_list.txt"
+        with open(members_list, 'a') as file:
+            for member in guild.members:
+                file.write(f"{member.name}\n")
+                ctx.send(f"{member.name}")
+        await ctx.author.send(file=discord.File(members_list))
+        os.remove(members_list)
+    else:
+        await ctx.send(f"{ctx.author.mention}, you are not the owner. Ignoring list all members request")
+
+def check_owner(user_id):
+    guild = discord.utils.get(bot.guilds, id=GUILD_ID)
+    if user_id == guild.owner_id:
+        return True
+    return False
 
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
