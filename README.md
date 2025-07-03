@@ -17,17 +17,17 @@ A part of this code was taken from the *Tech with Tim* and *ExceedCodes* channel
   </summary>
   
   says hi to the user
-  ```ruby
+  ```
   !hey
   ```
 
   allows the owner of the discord server to remove the role of a user
-  ```ruby
+  ```
   !dump <username>
   ```
 
   lists all the members of the server in the channel; creates list file and sends it to the owner
-  ```ruby
+  ```
   !list_all
   ```
 </details>
